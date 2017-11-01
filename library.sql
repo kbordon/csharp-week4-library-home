@@ -101,13 +101,13 @@ CREATE TABLE `history` (
 -- Foreign Keys
 -- ---
 
-ALTER TABLE `authors_books` ADD FOREIGN KEY (author_id) REFERENCES `authors` (`author_id`);
-ALTER TABLE `authors_books` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
-ALTER TABLE `copies` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
-ALTER TABLE `checkouts` ADD FOREIGN KEY (patron_id) REFERENCES `patrons` (`patron_id`);
-ALTER TABLE `checkouts` ADD FOREIGN KEY (copy_id) REFERENCES `copies` (`copy_id`);
-ALTER TABLE `history` ADD FOREIGN KEY (patron_id) REFERENCES `patrons` (`patron_id`);
-ALTER TABLE `history` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
+-- ALTER TABLE `authors_books` ADD FOREIGN KEY (author_id) REFERENCES `authors` (`author_id`);
+-- ALTER TABLE `authors_books` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
+-- ALTER TABLE `copies` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
+-- ALTER TABLE `checkouts` ADD FOREIGN KEY (patron_id) REFERENCES `patrons` (`patron_id`);
+-- ALTER TABLE `checkouts` ADD FOREIGN KEY (copy_id) REFERENCES `copies` (`copy_id`);
+-- ALTER TABLE `history` ADD FOREIGN KEY (patron_id) REFERENCES `patrons` (`patron_id`);
+-- ALTER TABLE `history` ADD FOREIGN KEY (book_id) REFERENCES `books` (`book_id`);
 
 -- ---
 -- Table Properties

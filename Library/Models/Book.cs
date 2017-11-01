@@ -29,7 +29,7 @@ namespace Library.Models
 
     public static void ClearAll()
     {
-      Query clearBooks = new Query("DELETE FROM books");
+      Query clearBooks = new Query("DELETE FROM books;");
       clearBooks.Execute();
     }
 
@@ -78,6 +78,35 @@ namespace Library.Models
       Query deleteBook = new Query("DELETE FROM books WHERE book_id = @BookId");
       deleteBook.AddParameter("@BookId", GetId().ToString());
       deleteBook.Execute();
+    }
+
+    public void AddAuthor(Author author)
+    {
+      Query addAuthor = new Query(@"
+      SET foreign_key_checks = 0;
+      INSERT INTO authors_books (author_id, book_id) VALUES (@AuthorId, @BookId);
+			SET foreign_key_checks = 1");
+      addAuthor.AddParameter("@BookId", GetId().ToString());
+      addAuthor.AddParameter("@AuthorId", author.GetId().ToString());
+      addAuthor.Execute();
+    }
+
+    public List<Author> GetAllAuthors()
+    {
+      List<Author> bookAuthors = new List<Author>{};
+      Query getAllAuthors = new Query("SELECT authors.* FROM authors_books JOIN authors ON authors_books.author_id = authors.author_id WHERE book_id = @BookId");
+
+      getAllAuthors.AddParameter("@BookId", GetId().ToString());
+      var rdr = getAllAuthors.Read();
+      while (rdr.Read())
+      {
+        Console.WriteLine("AAHHHHHHHHHHHH?");
+        int id = rdr.GetInt32(0);
+        string title = rdr.GetName(1);
+        Author bookAuthor = new Author(title, id);
+        bookAuthors.Add(bookAuthor);
+      }
+      return bookAuthors;
     }
 
   }

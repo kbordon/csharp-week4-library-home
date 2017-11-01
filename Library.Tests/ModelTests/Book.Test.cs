@@ -69,5 +69,23 @@ namespace Library.Tests
       int result = Book.GetAll().Count;
       Assert.AreEqual(0, result);
     }
+
+    [TestMethod]
+    public void AddAuthor_JoinsAuthorToBook_2()
+    {
+      Book newBook = new Book("Good Omens");
+      newBook.Save();
+
+      Author author1 = new Author("Neil Gaiman");
+      author1.Save();
+      Author author2 = new Author("Terry Prachett");
+      author2.Save();
+      newBook.AddAuthor(author1);
+      newBook.AddAuthor(author2);
+      Console.WriteLine(newBook.GetId());
+
+      Assert.AreEqual(2, newBook.GetAllAuthors().Count);
+
+    }
   }
 }
