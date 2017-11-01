@@ -5,10 +5,10 @@ using Library.Models;
 namespace Library.Tests
 {
   [TestClass]
-  public class BookTests : IDisposable
+  public class AuthorTests : IDisposable
   {
 
-    public BookTests()
+    public AuthorTests()
     {
       DB.DatabaseTest();
     }
@@ -22,18 +22,18 @@ namespace Library.Tests
     [TestMethod]
     public void GetAll_ReturnsDatabaseEmptyAtFirst_0()
     {
-      int result = Book.GetAll().Count;
+      int result = Author.GetAll().Count;
 
       Assert.AreEqual(0, result);
     }
 
     [TestMethod]
-    public void Save_SaveBookToDatabase_1()
+    public void Save_SaveAuthorToDatabase_1()
     {
-      Book book1 = new Book("Goosebumps");
-      book1.Save();
+      Author author1 = new Author("R. L. Stine");
+      author1.Save();
 
-      Assert.AreEqual(1, Book.GetAll().Count);
+      Assert.AreEqual(1, Author.GetAll().Count);
     }
 
     [TestMethod]
@@ -47,26 +47,26 @@ namespace Library.Tests
     }
 
     [TestMethod]
-    public void Update_UpdatesBookTitleInDatabase_False()
+    public void Update_UpdatesAuthorNameInDatabase_False()
     {
-      Book newBook = new Book("The Golden Compass");
-      newBook.Save();
+      Author newAuthor = new Author("J. K. Rowling");
+      newAuthor.Save();
 
-      newBook.SetTitle("The Not-So-Golden Compass");
-      newBook.Update();
+      newAuthor.SetName("NORLY Rowling");
+      newAuthor.Update();
 
-      Book foundBook = Book.Find(newBook.GetId());
-      Assert.AreNotEqual(foundBook.GetTitle(), "The Golden Compass");
+      Author foundAuthor = Author.Find(newAuthor.GetId());
+      Assert.AreNotEqual(foundAuthor.GetName(), "J. K. Rowling");
     }
 
     [TestMethod]
-    public void Delete_DeleteBookInDatabase_0()
+    public void Delete_DeleteAuthorInDatabase_0()
     {
-      Book newBook = new Book("The Mist");
-      newBook.Save();
-      newBook.Delete();
+      Author newAuthor = new Author("Anne Rice");
+      newAuthor.Save();
+      newAuthor.Delete();
 
-      int result = Book.GetAll().Count;
+      int result = Author.GetAll().Count;
       Assert.AreEqual(0, result);
     }
   }

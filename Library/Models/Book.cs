@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-titlespace Library.Models
+namespace Library.Models
 {
 	public class Book
 	{
@@ -30,7 +30,7 @@ titlespace Library.Models
     public static void ClearAll()
     {
       Query clearBooks = new Query("DELETE FROM books");
-      clearStudents.Execute();
+      clearBooks.Execute();
     }
 
     public static List<Book>GetAll()
@@ -47,5 +47,38 @@ titlespace Library.Models
       }
       return allBooks;
     }
+
+    public static Book Find(int bookId)
+    {
+      Query findBook = new Query("SELECT * FROM books WHERE book_id = @BookId");
+      findBook.AddParameter("@BookId", bookId.ToString());
+      var rdr = findBook.Read();
+      int id = 0;
+      string title = "";
+      while(rdr.Read())
+      {
+        id = rdr.GetInt32(0);
+        title = rdr.GetString(1);
+      }
+      Book foundBook = new Book(title, id);
+      return foundBook;
+    }
+
+    public void Update()
+    {
+      Query updateBook = new Query("UPDATE books SET title = @Title WHERE book_id = @BookId");
+      updateBook.AddParameter("@Title", GetTitle());
+      updateBook.AddParameter("@BookId", GetId().ToString());
+      updateBook.Execute();
+
+    }
+
+    public void Delete()
+    {
+      Query deleteBook = new Query("DELETE FROM books WHERE book_id = @BookId");
+      deleteBook.AddParameter("@BookId", GetId().ToString());
+      deleteBook.Execute();
+    }
+
   }
 }
