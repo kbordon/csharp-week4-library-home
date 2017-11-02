@@ -29,7 +29,7 @@ namespace Library.Models
 
     public static void ClearAll()
     {
-      Query clearAuthors = new Query("DELETE FROM authors_books; DELETE FROM authors");
+      Query clearAuthors = new Query("DELETE FROM authors_books; DELETE FROM copies; DELETE FROM authors");
       clearAuthors.Execute();
     }
 

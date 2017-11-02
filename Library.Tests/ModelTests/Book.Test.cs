@@ -17,6 +17,7 @@ namespace Library.Tests
     {
       Author.ClearAll();
       Book.ClearAll();
+      Patron.ClearAll();
     }
 
     [TestMethod]
@@ -86,6 +87,28 @@ namespace Library.Tests
 
       Assert.AreEqual(2, newBook.GetAllAuthors().Count);
 
+    }
+
+    [TestMethod]
+    public void AddCopy_AddsBookCopyToDatabase_4()
+    {
+        Book book1 = new Book("Harry Potter and the Replenishing Blue Bar");
+        book1.Save();
+
+        book1.AddCopy(4);
+        int copies = book1.GetNumberOfCopies();
+        Assert.AreEqual(4, copies);
+    }
+
+    [TestMethod]
+    public void GetNumberofAllCopies_GetsNumberofAllCopiesofBookInDatabase_3()
+    {
+        Book book1 = new Book("Harry Potter and the Waning Celebrity");
+        book1.Save();
+
+        book1.AddCopy(3);
+        int copies = book1.GetNumberOfCopies();
+        Assert.AreEqual(3, copies);
     }
   }
 }

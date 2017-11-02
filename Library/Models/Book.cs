@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
 
 namespace Library.Models
 {
@@ -108,6 +109,40 @@ namespace Library.Models
       }
       return bookAuthors;
     }
+
+	public void AddCopy(int quantity = 1)
+	{
+		MySqlConnection conn = DB.Connection();
+		conn.Open();
+		var cmd = conn.CreateCommand() as MySqlCommand;
+		cmd.CommandText = @"INSERT INTO copies (book_id) VALUES (@BookId);";
+		cmd.Parameters.Add(new MySqlParameter("@BookId", GetId()));
+		for (int i = 0; i < quantity; i++)
+		{
+			cmd.ExecuteNonQuery();
+		}
+		conn.Close();
+		if (conn != null)
+		{
+			conn.Dispose();
+		}
+	}
+
+	public int GetNumberOfCopies()
+	{
+		MySqlConnection conn = DB.Connection();
+		conn.Open();
+		var cmd = conn.CreateCommand() as MySqlCommand;
+		cmd.CommandText = @"SELECT COUNT(*) FROM copies WHERE book_id = @BookId;";
+		cmd.Parameters.Add(new MySqlParameter("@BookId", GetId()));
+		var rdr = cmd.ExecuteReader() as MySqlDataReader;
+		int count = 0;
+		while (rdr.Read())
+		{
+			count = rdr.GetInt32(0);
+		}
+		return count;
+	}
 
   }
 }

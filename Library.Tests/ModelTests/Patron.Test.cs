@@ -46,31 +46,31 @@ namespace Library.Tests
       Patron foundPatron = Patron.Find(newPatron.GetId());
       Assert.AreEqual(newPatron, foundPatron);
     }
-    //
-    // [TestMethod]
-    // public void Update_UpdatesBookTitleInDatabase_False()
-    // {
-    //   Book newBook = new Book("The Golden Compass");
-    //   newBook.Save();
-    //
-    //   newBook.SetTitle("The Not-So-Golden Compass");
-    //   newBook.Update();
-    //
-    //   Book foundBook = Book.Find(newBook.GetId());
-    //   Assert.AreNotEqual(foundBook.GetTitle(), "The Golden Compass");
-    // }
-    //
-    // [TestMethod]
-    // public void Delete_DeleteBookInDatabase_0()
-    // {
-    //   Book newBook = new Book("The Mist");
-    //   newBook.Save();
-    //   newBook.Delete();
-    //
-    //   int result = Book.GetAll().Count;
-    //   Assert.AreEqual(0, result);
-    // }
-    //
+
+    [TestMethod]
+    public void Update_UpdatesPatronTitleInDatabase_False()
+    {
+      Patron newPatron = new Patron("Marjorie Bouvier");
+      newPatron.Save();
+
+      newPatron.SetName("Marge Simpson");
+      newPatron.Update();
+
+      Patron foundPatron = Patron.Find(newPatron.GetId());
+      Assert.AreEqual(foundPatron, newPatron);
+    }
+
+    [TestMethod]
+    public void Delete_DeletePatronInDatabase_0()
+    {
+      Patron newPatron = new Patron("Montgomery Burns");
+      newPatron.Save();
+      newPatron.Delete();
+
+      int result = Patron.GetAll().Count;
+      Assert.AreEqual(0, result);
+    }
+
     // [TestMethod]
     // public void AddAuthor_JoinsAuthorToBook_2()
     // {

@@ -17,6 +17,7 @@ namespace Library.Tests
     {
       Author.ClearAll();
       Book.ClearAll();
+      Patron.ClearAll();
     }
 
     [TestMethod]
