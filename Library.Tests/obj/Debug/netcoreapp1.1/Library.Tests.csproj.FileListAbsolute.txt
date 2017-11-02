@@ -11,3 +11,17 @@
 /Users/Guest/Desktop/Library.Solution/Library.Tests/obj/Debug/netcoreapp1.1/Library.Tests.AssemblyInfo.cs
 /Users/Guest/Desktop/Library.Solution/Library.Tests/obj/Debug/netcoreapp1.1/Library.Tests.dll
 /Users/Guest/Desktop/Library.Solution/Library.Tests/obj/Debug/netcoreapp1.1/Library.Tests.pdb
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.Tests.deps.json
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.Tests.runtimeconfig.json
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.Tests.runtimeconfig.dev.json
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.Tests.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.Tests.pdb
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\bin\Debug\netcoreapp1.1\Library.pdb
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\obj\Debug\netcoreapp1.1\Library.Tests.csproj.CoreCompileInputs.cache
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\obj\Debug\netcoreapp1.1\Library.Tests.AssemblyInfo.cs
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\obj\Debug\netcoreapp1.1\Library.Tests.dll
+C:\Users\kbord\desktop\epicodus\csharp\csharp-week4-library\Library.Tests\obj\Debug\netcoreapp1.1\Library.Tests.pdb
