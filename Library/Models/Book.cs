@@ -144,5 +144,22 @@ namespace Library.Models
 		return count;
 	}
 
+	public List<int> GetAvailableCopiesIds()
+	{
+		List<int> copyIds = new List<int>{};
+		MySqlConnection conn = DB.Connection();
+		conn.Open();
+		var cmd = conn.CreateCommand() as MySqlCommand;
+		cmd.CommandText = @"SELECT copy_id FROM copies WHERE book_id = @BookId AND copy_id NOT IN (SELECT copy_id FROM checkouts);";
+		cmd.Parameters.Add(new MySqlParameter("@BookId", GetId()));
+		var rdr = cmd.ExecuteReader() as MySqlDataReader;
+		while (rdr.Read())
+		{
+			int copyId = rdr.GetInt32(0);
+			copyIds.Add(copyId);
+		}
+		return copyIds;
+	}
+
   }
 }

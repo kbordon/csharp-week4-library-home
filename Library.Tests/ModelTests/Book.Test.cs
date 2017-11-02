@@ -106,9 +106,26 @@ namespace Library.Tests
         Book book1 = new Book("Harry Potter and the Waning Celebrity");
         book1.Save();
 
+        Book book2 = new Book("Harry Potter and the Scandalous Divorce");
+        book2.Save();
+
         book1.AddCopy(3);
+        book2.AddCopy();
         int copies = book1.GetNumberOfCopies();
         Assert.AreEqual(3, copies);
     }
+
+    [TestMethod]
+    public void GetAvailableCopiesIds_GetNumberOfCopiesAvailableToCheckout_4()
+    {
+        Book book1 = new Book("Harry Potter and the Waning Celebrity");
+        book1.Save();
+
+        book1.AddCopy(3);
+        int copies = book1.GetAvailableCopiesIds().Count;
+        Assert.AreEqual(3, copies);
+    }
+
+
   }
 }

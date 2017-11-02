@@ -163,6 +163,32 @@ namespace Library.Models
     //   deleteBook.Execute();
     }
 
+    public void Checkout(DateTime date, int copyId)
+    {
+        string dueDate = date.AddDays(28).ToString("yyyy-MM-dd HH:mm:ss");
+        string checkOutDate = date.ToString("yyyy-MM-dd HH:mm:ss");
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"INSERT INTO checkouts (patron_id, copy_id, check_out, due_date) VALUES (@PatronId, @CopyId, @CheckOut, @DueDate);";
+        cmd.Parameters.Add(new MySqlParameter("@PatronId", GetId()));
+        cmd.Parameters.Add(new MySqlParameter("@CopyId", copyId));
+        cmd.Parameters.Add(new MySqlParameter("@CheckOut", checkOutDate));
+        cmd.Parameters.Add(new MySqlParameter("@DueDate", dueDate));
+        cmd.ExecuteNonQuery();
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+    }
+
+    public Dictionary<string, object> GetHistory()
+    {
+        Dictionary<string, object> history = new Dictionary<string, object>{};
+        return history;
+    }
+
 
   }
 }

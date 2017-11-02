@@ -71,6 +71,36 @@ namespace Library.Tests
       Assert.AreEqual(0, result);
     }
 
+    [TestMethod]
+    public void Checkout_ChecksOutBookCopy_1()
+    {
+        Patron newPatron = new Patron("Montgomery Burns");
+        newPatron.Save();
+        Book book1 = new Book("Harry Potter and the Waning Celebrity");
+        book1.Save();
+        book1.AddCopy(2);
+        int copyId = book1.GetAvailableCopiesIds()[0];
+        DateTime currentDate = DateTime.Now;
+        newPatron.Checkout(currentDate, copyId);
+        Assert.AreEqual(1, book1.GetAvailableCopiesIds().Count);
+
+    }
+
+    [TestMethod]
+    public void GetHistory_GetsPatronsCheckOutHistory_List()
+    {
+        Patron newPatron = new Patron("Montgomery Burns");
+        newPatron.Save();
+        Book book1 = new Book("Harry Potter and the Waning Celebrity");
+        book1.Save();
+        book1.AddCopy(1);
+        DateTime currentDate = DateTime.Now;
+        int copyId = book1.GetAvailableCopiesIds()[0];
+        newPatron.Checkout(currentDate, copyId);
+        Dictionary<string, object> result = newPatron.GetHistory();
+        Assert.AreEqual(1, result.Count);
+    }
+
     // [TestMethod]
     // public void AddAuthor_JoinsAuthorToBook_2()
     // {
