@@ -98,7 +98,26 @@ namespace Library.Tests
         int copyId = book1.GetAvailableCopiesIds()[0];
         newPatron.Checkout(currentDate, copyId);
         Dictionary<string, object> result = newPatron.GetHistory();
-        Assert.AreEqual(1, result.Count);
+        List<Book> books = (List<Book>) result["books"];
+        // List<DateTime> dates = (List<DateTime>) result["due-dates"];
+        // Console.WriteLine(dates[0].ToString("yyyy-MM-dd HH:mm:ss"));
+        Assert.AreEqual(book1, books[0]);
+    }
+
+    [TestMethod]
+    public void GetDueDate_GetsDueDateForPatron_String()
+    {
+        Patron newPatron = new Patron("Montgomery Burns");
+        newPatron.Save();
+        Book book1 = new Book("Harry Potter and the Waning Celebrity");
+        book1.Save();
+        book1.AddCopy(1);
+        DateTime currentDate = DateTime.Now;
+        DateTime dueDate = currentDate.AddDays(28);
+        int copyId = book1.GetAvailableCopiesIds()[0];
+        newPatron.Checkout(currentDate, copyId);
+        string deadline = newPatron.GetDueDate(book1);
+        Assert.AreEqual(deadline, dueDate.ToString("yyyy-MM-dd hh:MM:ss"));
     }
 
     // [TestMethod]

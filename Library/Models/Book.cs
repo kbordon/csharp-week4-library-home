@@ -20,6 +20,26 @@ namespace Library.Models
       SetId(id);
     }
 
+	public override bool Equals(System.Object otherBook)
+	{
+		if (!(otherBook is Book))
+		{
+			return false;
+		}
+		else
+		{
+			Book newBook = (Book) otherBook;
+			bool idEquality = this.GetId() == newBook.GetId();
+			bool titleEquality = this.GetTitle() == newBook.GetTitle();
+			return (idEquality && titleEquality);
+		}
+	}
+
+	public override int GetHashCode()
+	{
+		return this.GetTitle().GetHashCode();
+	}
+
     public void Save()
     {
       Query saveBook = new Query("INSERT INTO books (title) VALUES (@Title)");
@@ -150,7 +170,7 @@ namespace Library.Models
 		MySqlConnection conn = DB.Connection();
 		conn.Open();
 		var cmd = conn.CreateCommand() as MySqlCommand;
-		cmd.CommandText = @"SELECT copy_id FROM copies WHERE book_id = @BookId AND copy_id NOT IN (SELECT copy_id FROM checkouts);";
+		cmd.CommandText = @"SELECT copies.copy_id FROM copies LEFT OUTER JOIN checkouts ON copies.copy_id = checkouts.copy_id WHERE checkouts.copy_id IS NULL AND copies.book_id = @BookId;";
 		cmd.Parameters.Add(new MySqlParameter("@BookId", GetId()));
 		var rdr = cmd.ExecuteReader() as MySqlDataReader;
 		while (rdr.Read())
@@ -160,6 +180,33 @@ namespace Library.Models
 		}
 		return copyIds;
 	}
+
+	public static List<Book> GetOverdueBooks()
+	{
+		List<Book> overdueBooks = new List<Book>{};
+		DateTime currentDate = DateTime.Now;
+		string currentDateString = currentDate.ToString("yyyy-MM-dd HH:mm:ss");
+		MySqlConnection conn = DB.Connection();
+		conn.Open();
+		var cmd = conn.CreateCommand() as MySqlCommand;
+		cmd.CommandText = @"
+		SELECT books.* FROM checkouts
+			JOIN copies ON (checkouts.copy_id = copies.copy_id)
+			JOIN books ON copies.book_id = books.book_id
+		WHERE due_date < @CurrentDate;";
+		cmd.Parameters.Add(new MySqlParameter("@CurrentDate", currentDateString));
+		var rdr = cmd.ExecuteReader() as MySqlDataReader;
+		while (rdr.Read())
+		{
+			int id = rdr.GetInt32(0);
+			string title = rdr.GetString(1);
+			Book overdueBook = new Book(title, id);
+			overdueBooks.Add(overdueBook);
+		}
+		return overdueBooks;
+	}
+
+
 
   }
 }

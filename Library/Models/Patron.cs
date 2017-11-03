@@ -186,9 +186,53 @@ namespace Library.Models
     public Dictionary<string, object> GetHistory()
     {
         Dictionary<string, object> history = new Dictionary<string, object>{};
+		List<DateTime> dueDates = new List<DateTime>{};
+		List<DateTime> checkouts = new List<DateTime>{};
+		List<Book> patronBooks = new List<Book>{};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT books.*, checkouts.check_out, checkouts.due_date FROM checkouts JOIN copies ON (checkouts.copy_id = copies.copy_id) JOIN books on (copies.book_id = books.book_id) WHERE checkouts.patron_id = @PatronId;";
+		cmd.Parameters.Add(new MySqlParameter("@PatronId", GetId()));
+		var rdr = cmd.ExecuteReader() as MySqlDataReader;
+		while (rdr.Read())
+		{
+			int id = rdr.GetInt32(0);
+			string title = rdr.GetString(1);
+			patronBooks.Add(new Book(title, id));
+			DateTime check = rdr.GetDateTime(2);
+			checkouts.Add(check);
+			DateTime due = rdr.GetDateTime(3);
+			dueDates.Add(due);
+		}
+		history.Add("books", patronBooks);
+		history.Add("check-dates", checkouts);
+		history.Add("due-dates", dueDates);
         return history;
     }
 
+	public string GetDueDate(Book loan)
+	{
+		string dueDate = "";
+		MySqlConnection conn = DB.Connection();
+		conn.Open();
+		var cmd = conn.CreateCommand() as MySqlCommand;
+		cmd.CommandText = @"SELECT checkouts.due_date FROM copies JOIN checkouts ON copies.copy_id = checkouts.copy_id WHERE checkouts.patron_id = @PatronId and copies.book_id = @BookId LIMIT 1;";
+		// this assumes the user can only check out one copy of a specific book. modify return into a list of strings otherwise.
+		cmd.Parameters.Add(new MySqlParameter("@PatronId", GetId()));
+		cmd.Parameters.Add(new MySqlParameter("@BookId", loan.GetId()));
+		var rdr = cmd.ExecuteReader() as MySqlDataReader;
+		while (rdr.Read())
+		{
+			dueDate = rdr.GetDateTime(0).ToString("yyyy-MM-dd hh:MM:ss");
+		}
+		conn.Close();
+		if (conn != null)
+		{
+			conn.Dispose();
+		}
+		return dueDate;
+	}
 
   }
 }
